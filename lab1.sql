@@ -67,10 +67,43 @@ SELECT first_name, last_name, hire_date
 FROM employees
 WHERE TO_CHAR(hire_date, 'YYYY')=1987; 
 
--- 17 -- nu o sa afiseze nimic pentru ca toti au mangeri
+-- 17 -- nu o sa afiseze nimic pentru ca toti au manageri
 SELECT last_name, job_id
 FROM employees
 WHERE manager_id IS NULL;
 
 -- 18 --
+SELECT last_name, salary, commission_pct
+FROM employees
+WHERE commission_pct IS NOT NULL
+ORDER BY 
+    salary DESC,
+    commission_pct DESC;
+         
+-- 19 -- cele cu null apar inaintea celor cu valoare la comision
+SELECT employee_id, last_name, salary, commission_pct
+FROM employees
+ORDER BY 
+    salary DESC,
+    commission_pct DESC;
+
+-- 20 --
+SELECT last_name
+FROM employees
+WHERE UPPER(concat(last_name, first_name)) LIKE '__A%';
+
+-- 21 --
+SELECT last_name, first_name, department_id, manager_id 
+FROM employees
+WHERE UPPER(concat(last_name, first_name)) LIKE '%L%L%' and (department_id = 30 or manager_id = 101);
+
+-- 22 --
+SELECT first_name, job_id, salary
+FROM employees
+WHERE UPPER(job_id) LIKE '%CLERK%' OR UPPER(job_id) LIKE '%REP%' and salary NOT IN (1000, 2000, 3000);
+
+-- 23 --
+SELECT first_name, salary, commission_pct
+FROM employees
+WHERE commission_pct IS NOT NULL and salary > salary * commission_pct * 5;
 
