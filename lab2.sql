@@ -167,7 +167,8 @@ SELECT emps.first_name || ' ' || emps.last_name "Nume",
        emps.department_id "Cod departament", 
        emps2.last_name "Coleg"
 FROM employees emps
-    JOIN employees emps2 ON (emps.department_id = emps2.department_id);
+    JOIN employees emps2 ON (emps.department_id = emps2.department_id AND emps.employee_id < emps2.employee_id)
+ORDER BY 3;
     
 -- 25 --
 SELECT emps.first_name || ' ' || emps.last_name "Nume", 
@@ -186,11 +187,23 @@ FROM employees emps
 WHERE emps.last_name = 'Gates'
 ORDER BY 2;
 
+SELECT emps2.first_name || ' ' || emps2.last_name "Nume", emps2.hire_date "Data angajarii"
+FROM employees emps
+    JOIN employees emps2 ON (emps.hire_date < emps2.hire_date AND UPPER(emps.last_name) LIKE 'GATES' )
+ORDER BY 2;
+
 -- 27 --
 SELECT emps.first_name || ' ' || emps.last_name "Angajat",
        emps.hire_date "Data_ang",
        man.first_name || ' ' || man.last_name "Manager",
        man.hire_date "Data_manager"
 FROM employees emps
-       LEFT JOIN employees man ON (emps.manager_id = man.employee_id)
+    JOIN employees man ON (emps.manager_id = man.employee_id)
 WHERE man.hire_date > emps.hire_date;
+
+SELECT emps.first_name || ' ' || emps.last_name "Angajat",
+       emps.hire_date "Data_ang",
+       man.first_name || ' ' || man.last_name "Manager",
+       man.hire_date "Data_manager"
+FROM employees emps
+    JOIN employees man ON (emps.manager_id = man.employee_id AND man.hire_date > emps.hire_date)
